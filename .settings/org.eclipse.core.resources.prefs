@@ -1,0 +1,13 @@
+eclipse.preferences.version=1
+encoding//src/BLL/SubmissionBLL.java=UTF-8
+encoding//src/Database/DBHelper.java=UTF-8
+encoding//src/View/AccountForm.java=UTF-8
+encoding//src/View/AnalysisPage.java=UTF-8
+encoding//src/View/MainPage.java=UTF-8
+encoding//src/View/Program.java=UTF-8
+encoding//src/View/SubmissionDetailPage.java=UTF-8
+encoding//src/View/SubmissionPage.java=UTF-8
+encoding//src/util/CodeforcesCrawler.java=UTF-8
+encoding//src/util/GroqService.java=UTF-8
+encoding//src/util/VjudgeCrawler.java=UTF-8
+encoding/<project>=windows-1252
