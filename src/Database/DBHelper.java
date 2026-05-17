@@ -24,11 +24,11 @@ public class DBHelper {
 		try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(url, user, password);
-        } catch (ClassNotFoundException e) {
-            System.err.println("Lỗi: Không tìm thấy MySQL Driver!");
+        } 
+		catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (SQLException e) {
-            System.err.println("Lỗi: Kết nối Database thất bại! Hãy kiểm tra lại User/Pass.");
+        } 
+		catch (SQLException e) {
             e.printStackTrace();
         }
 	}
@@ -42,8 +42,8 @@ public class DBHelper {
 				}
 			}
 			pstmt.executeUpdate();
-		} catch (SQLException e) {
-            System.err.println("Lỗi thực thi SQL: " + e.getMessage());
+		} 
+		catch (SQLException e) {
             e.printStackTrace();
         }
 	}
@@ -57,8 +57,8 @@ public class DBHelper {
                 }
             }
             return pstmt.executeQuery();     
-        } catch (SQLException e) {
-            System.err.println("Lỗi truy vấn SQL: " + e.getMessage());
+        } 
+        catch (SQLException e) {
             e.printStackTrace();
             return null;
         }

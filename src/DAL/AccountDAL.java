@@ -1,6 +1,7 @@
 package DAL;
 import java.util.List;
 
+import DTO.AccountResponse;
 import DTO.AddAccountDTO;
 import Database.DBHelper;
 import Entities.Account;
@@ -10,56 +11,87 @@ import java.util.ArrayList;
 
 public class AccountDAL {
 	
-	public List<Account>  GetAllAccounts() {
-		List<Account> list = new ArrayList<Account>();
+	public List<AccountResponse>  GetAllAccounts() {
+		List<AccountResponse> list = new ArrayList<AccountResponse>();
 		
 		String sql =  	"SELECT a.*, p.platformName FROM accounts a " +
 		                "JOIN platforms p ON a.platformId = p.platformId where a.isActive = 1";
+		
 		ResultSet rs = DBHelper.getInstance().GetRecords(sql);
 		
 		try {
 			while (rs != null && rs.next()) {
-				Account acc = new Account();
-				
-				acc.setAccountId(rs.getInt("accountId"));
-				acc.setAddedDate(rs.getTimestamp("addedDate"));
-				acc.setHandle(rs.getString("handle"));
-				acc.setLastCrawlDate(rs.getTimestamp("lastCrawlDate"));
-				acc.setPlatformId(rs.getInt("platformId"));
-				acc.setPlatformName(rs.getString("platformName"));
-				acc.setIsActive(rs.getBoolean("isActive"));
+				AccountResponse acc = new AccountResponse(rs.getInt("accountId"), 
+					      rs.getString("handle"), 
+						  rs.getInt("platformId"), 
+						  rs.getString("platformName"),
+						  rs.getTimestamp("addedDate"), 
+						  rs.getTimestamp("lastCrawlDate"), 
+						  rs.getBoolean("isActive")
+						  );
 				
 				list.add(acc);
 			}
-		} catch(Exception e) {
-			
+		} 
+		catch(Exception e) {
+			e.printStackTrace();
 		}
 		return list;
 	}
 	
-	public Account GetAccountById(int accountId) {
+	public AccountResponse GetAccountById(int accountId) {
 		String sql = "SELECT a.*, p.platformName FROM accounts a " +
 	             "JOIN platforms p ON a.platformId = p.platformId " +
 	             "WHERE a.accountId = ? AND a.isActive = 1";
 
 	    ResultSet rs = DBHelper.getInstance().GetRecords(sql, accountId);
 	    
-	    Account acc = null; 
+	    AccountResponse acc = null; 
 	    try {
 	        if (rs != null && rs.next()) {
-	        	acc = new Account();
-				
-				acc.setAccountId(rs.getInt("accountId"));
-				acc.setAddedDate(rs.getTimestamp("addedDate"));
-				acc.setHandle(rs.getString("handle"));
-				acc.setLastCrawlDate(rs.getTimestamp("lastCrawlDate"));
-				acc.setPlatformId(rs.getInt("platformId"));
-				acc.setPlatformName(rs.getString("platformName"));
+	        	acc = new AccountResponse(rs.getInt("accountId"), 
+					      rs.getString("handle"), 
+						  rs.getInt("platformId"), 
+						  rs.getString("platformName"),
+						  rs.getTimestamp("addedDate"), 
+						  rs.getTimestamp("lastCrawlDate"), 
+						  rs.getBoolean("isActive")
+						  );
 	        }
-	    } catch (Exception e) {
+	    } 
+	    catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	    return acc; 
+	}
+	
+	public List<AccountResponse> GetAccountByPlatform(int platformId) {
+		List<AccountResponse> list = new ArrayList<AccountResponse>();
+		
+		String sql = "SELECT a.*, p.platformName FROM accounts a " +
+                "JOIN platforms p ON a.platformId = p.platformId " +
+                "WHERE a.platformId = ? AND a.isActive = 1";
+		
+		ResultSet rs = DBHelper.getInstance().GetRecords(sql, platformId);
+		
+		try {
+			while (rs != null && rs.next()) {
+				AccountResponse acc = new AccountResponse(rs.getInt("accountId"), 
+					      rs.getString("handle"), 
+						  rs.getInt("platformId"), 
+						  rs.getString("platformName"),
+						  rs.getTimestamp("addedDate"), 
+						  rs.getTimestamp("lastCrawlDate"), 
+						  rs.getBoolean("isActive")
+						  );
+				
+				list.add(acc);
+			}
+		} 
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 	public void AddAccount(AddAccountDTO acc) {
@@ -82,32 +114,5 @@ public class AccountDAL {
 	    String sql = "UPDATE accounts SET lastCrawlDate = NOW() WHERE accountId = ?";
 	    DBHelper.getInstance().ExecuteDB(sql, accountId);
 	}
-	
-	public List<Account> GetAccountByPlatform(int platformId) {
-		List<Account> list = new ArrayList<Account>();
-		
-		String sql = "SELECT a.*, p.platformName FROM accounts a " +
-                "JOIN platforms p ON a.platformId = p.platformId " +
-                "WHERE a.platformId = ? AND a.isActive = 1";
-		ResultSet rs = DBHelper.getInstance().GetRecords(sql, platformId);
-		
-		try {
-			while (rs != null && rs.next()) {
-				Account acc = new Account();
-				
-				acc.setAccountId(rs.getInt("accountId"));
-				acc.setAddedDate(rs.getTimestamp("addedDate"));
-				acc.setHandle(rs.getString("handle"));
-				acc.setLastCrawlDate(rs.getTimestamp("lastCrawlDate"));
-				acc.setPlatformId(rs.getInt("platformId"));
-				acc.setPlatformName(rs.getString("platformName"));
-				acc.setIsActive(rs.getBoolean("isActive"));
-				
-				list.add(acc);
-			}
-		} catch(Exception e) {
-			
-		}
-		return list;
-	}
+
 }

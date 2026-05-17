@@ -13,38 +13,40 @@ public class PlatformDAL {
 		List<Platform> list = new ArrayList<Platform>();
 		
 		String sql = "SELECT * FROM platforms";
+		
 		ResultSet rs = DBHelper.getInstance().GetRecords(sql);
 		
 		try {
 			while (rs != null && rs.next()) {
-				Platform plf = new Platform();
-				
-				plf.setPlatformId(rs.getInt("platformId"));
-				plf.setPlatformName(rs.getString("platformName"));
-				plf.setWebsiteUrl(rs.getString("websiteUrl"));
+				Platform plf = new Platform(rs.getInt("platformId"),
+						rs.getString("platformName"),
+						rs.getString("websiteUrl")
+						);
 				
 				list.add(plf);
 			}
-		} catch(Exception e) {
-			
+		} 
+		catch(Exception e) {
+			e.printStackTrace();
 		}
 		return list;
 	}
 	
 	public Platform GetPlatformById(int platformId) {
 	    String sql = "SELECT * FROM platforms WHERE platformId = ?";
+	    
 	    ResultSet rs = DBHelper.getInstance().GetRecords(sql, platformId);
 	    
 	    Platform plf = null; 
 	    try {
 	        if (rs != null && rs.next()) {
-	            plf = new Platform(); 
-	            
-	            plf.setPlatformId(rs.getInt("platformId"));
-	            plf.setPlatformName(rs.getString("platformName"));
-	            plf.setWebsiteUrl(rs.getString("websiteUrl"));
+	        	plf = new Platform(rs.getInt("platformId"),
+						rs.getString("platformName"),
+						rs.getString("websiteUrl")
+						);
 	        }
-	    } catch (Exception e) {
+	    } 
+	    catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	    return plf; 
@@ -59,6 +61,7 @@ public class PlatformDAL {
 	    String sql = "UPDATE platforms SET platformName = ?, websiteUrl = ? WHERE platformId = ?";
 	    DBHelper.getInstance().ExecuteDB(sql, plf.getPlatformName(), plf.getWebsiteUrl(), plf.getPlatformId());
 	}
+	
 	
 	public void DeletePlatform(int platformId) {
 	    String sql = "DELETE FROM platform WHERE platformId = ?";

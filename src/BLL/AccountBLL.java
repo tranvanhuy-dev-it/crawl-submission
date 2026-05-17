@@ -3,21 +3,22 @@ package BLL;
 import java.util.List;
 
 import DAL.AccountDAL;
+import DTO.AccountResponse;
 import DTO.AddAccountDTO;
 import Entities.Account;
 
 public class AccountBLL {
 	private AccountDAL dal = new AccountDAL();
 	
-	public List<Account> GetAllAccounts() {
+	public List<AccountResponse> GetAllAccounts() {
 		return dal.GetAllAccounts();
 	}
 	
-	public Account GetAccountById(int accountId) {
+	public AccountResponse GetAccountById(int accountId) {
 		return dal.GetAccountById(accountId);
 	}
 	
-	public List<Account> GetAccountByPlatform(int plfId) {
+	public List<AccountResponse> GetAccountByPlatform(int plfId) {
 		return dal.GetAccountByPlatform(plfId);
 	}
 	
@@ -44,9 +45,9 @@ public class AccountBLL {
 	}
 	
 	private boolean CheckExistsAccount(AddAccountDTO dto) {
-	    List<Account> lists = dal.GetAllAccounts(); 
+	    List<AccountResponse> lists = dal.GetAllAccounts(); 
 	    
-	    for (Account a : lists) {       
+	    for (AccountResponse a : lists) {       
 	        if (a.getHandle().equalsIgnoreCase(dto.getHandle()) && a.getPlatformId() == dto.getPlatformId()) {
 	            return true; 
 	        }

@@ -12,7 +12,7 @@ import com.google.gson.*;
 
 public class GroqService {
 
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "";
 
     private static final String API_URL =
             "https://api.groq.com/openai/v1/chat/completions";
@@ -100,11 +100,11 @@ public class GroqService {
 
             JsonObject data = JsonParser.parseString(jsonPart).getAsJsonObject();
 
-            AddAnalysisDTO dto = new AddAnalysisDTO();
-            dto.setDataStructures(getSafe(data, "data_structures"));
-            dto.setAlgorithms(getSafe(data, "algorithms"));
-            dto.setAiProbability(data.get("ai_probability").getAsFloat());
-            dto.setAiFeedback(getSafe(data, "feedback"));
+            AddAnalysisDTO dto = new AddAnalysisDTO(getSafe(data, "data_structures"), 
+            		getSafe(data, "algorithms"),
+            		data.get("ai_probability").getAsFloat(),
+            		getSafe(data, "feedback")
+            		);
 
             return dto;
 

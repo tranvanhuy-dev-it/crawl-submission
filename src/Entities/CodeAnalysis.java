@@ -23,14 +23,19 @@ public class CodeAnalysis {
     
     public int getAnalysisId() { return analysisId; }
     public void setAnalysisId(int analysisId) { this.analysisId = analysisId; }
+    
     public int getSubmissionId() { return submissionId; }
     public void setSubmissionId(int submissionId) { this.submissionId = submissionId; }
+    
     public String getDataStructures() { return dataStructures; }
     public void setDataStructures(String dataStructures) { this.dataStructures = dataStructures; }
+    
     public String getAlgorithms() { return algorithms; }
     public void setAlgorithms(String algorithms) { this.algorithms = algorithms; }
+    
     public Float getAiProbability() { return aiProbability; }
     public void setAiProbability(Float aiProbability) { this.aiProbability = aiProbability; }
+    
     public String getAiFeedback() { return aiFeedback; }
     public void setAiFeedback(String aiFeedback) { this.aiFeedback = aiFeedback; }
 }

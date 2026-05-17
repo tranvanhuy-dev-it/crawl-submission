@@ -14,7 +14,6 @@ public class SubmissionDetailPage extends JFrame {
 		this.setLayout(new BorderLayout(12, 12));
 		this.getContentPane().setBackground(new Color(245, 247, 250));
 
-		// ================= HEADER =================
 		JLabel title = new JLabel("CHI TIẾT SUBMISSION");
 		title.setFont(new Font("Segoe UI", Font.BOLD, 26));
 		title.setForeground(new Color(33, 37, 41));
@@ -22,7 +21,6 @@ public class SubmissionDetailPage extends JFrame {
 
 		this.add(title, BorderLayout.NORTH);
 
-		// ================= INFO PANEL =================
 		JPanel info = new JPanel(new GridLayout(2, 2, 10, 10));
 		info.setBackground(Color.WHITE);
 		info.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
@@ -44,7 +42,6 @@ public class SubmissionDetailPage extends JFrame {
 
 		this.add(info, BorderLayout.BEFORE_FIRST_LINE);
 
-		// ================= CODE AREA =================
 		JTextArea codeArea = new JTextArea();
 		codeArea.setText(s.getSourceCode());
 		codeArea.setFont(new Font("Consolas", Font.PLAIN, 14));

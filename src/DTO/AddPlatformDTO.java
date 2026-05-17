@@ -13,6 +13,7 @@ public class AddPlatformDTO {
 	
 	public String getPlatformName() { return platformName; }
 	public void setPlatformName(String platformName) { this.platformName = platformName; }
+	
 	public String getWebsiteUrl() { return websiteUrl; }
 	public void setWebsiteUrl(String websiteUrl) { this.websiteUrl = websiteUrl; }
 }

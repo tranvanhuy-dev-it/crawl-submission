@@ -1,11 +1,9 @@
 package BLL;
 
-import java.sql.Timestamp;
-import java.time.DateTimeException;
-import java.time.LocalDateTime;
 import java.util.List;
 import DAL.SubmissionDAL;
 import DAL.AccountDAL;
+import DTO.AccountResponse;
 import DTO.AddSubmissionDTO;
 import Entities.Submission;
 import Entities.Account;
@@ -32,13 +30,13 @@ public class SubmissionBLL {
     }
 
     public String CrawlLatestSubmissionsForAllAccounts() {
-        List<Account> allAccounts = accDal.GetAllAccounts();
+        List<AccountResponse> allAccounts = accDal.GetAllAccounts();
         
         if (allAccounts == null || allAccounts.isEmpty()) return "Không có tài khoản nào!";
 
         int totalNew = 0;
 
-        for (Account acc : allAccounts) {
+        for (AccountResponse acc : allAccounts) {
             List<AddSubmissionDTO> crawledList = CrawlerService.crawlData(acc.getPlatformName(), acc.getHandle(), acc.getLastCrawlDate());
             if (crawledList == null || crawledList.isEmpty()) continue;
 

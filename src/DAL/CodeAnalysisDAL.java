@@ -14,21 +14,23 @@ public class CodeAnalysisDAL {
         List<CodeAnalysis> list = new ArrayList<CodeAnalysis>();
         
         String sql = "SELECT * FROM codeAnalysis";
+        
         ResultSet rs = DBHelper.getInstance().GetRecords(sql);
         
         try {
             while (rs != null && rs.next()) {
-                CodeAnalysis ca = new CodeAnalysis();
-                ca.setAnalysisId(rs.getInt("analysisId"));
-                ca.setSubmissionId(rs.getInt("submissionId"));
-                ca.setDataStructures(rs.getString("dataStructures"));
-                ca.setAlgorithms(rs.getString("algorithms"));
-                ca.setAiProbability(rs.getFloat("aiProbability"));
-                ca.setAiFeedback(rs.getString("aiFeedback"));
+                CodeAnalysis ca = new CodeAnalysis(rs.getInt("analysisId"),
+                		rs.getInt("submissionId"),
+                		rs.getString("dataStructures"),
+                		rs.getString("algorithms"),
+                		rs.getFloat("aiProbability"),
+                		rs.getString("aiFeedback")
+                		);
                 
                 list.add(ca);
             }
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             e.printStackTrace();
         }
         return list;
@@ -36,14 +38,21 @@ public class CodeAnalysisDAL {
 
     public CodeAnalysis GetAnalysisBySubmission(int submissionId) {
         String sql = "SELECT * FROM codeAnalysis WHERE submissionId = ?";
+        
         ResultSet rs = DBHelper.getInstance().GetRecords(sql, submissionId);
         
         try {
             if (rs != null && rs.next()) {
-                return new CodeAnalysis(rs.getInt("analysisId"), rs.getInt("submissionId"), rs.getString("dataStructures"), 
-                		rs.getString("algorithms"), rs.getFloat("aiProbability"), rs.getString("aiFeedback"));
+                return new CodeAnalysis(rs.getInt("analysisId"), 
+                		rs.getInt("submissionId"), 
+                		rs.getString("dataStructures"), 
+                		rs.getString("algorithms"), 
+                		rs.getFloat("aiProbability"), 
+                		rs.getString("aiFeedback")
+                		);
             }
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             e.printStackTrace();
         }
         return null; 
@@ -52,13 +61,7 @@ public class CodeAnalysisDAL {
     public void AddAnalysis(AddAnalysisDTO ca) {
         String sql = "INSERT INTO codeAnalysis (submissionId, dataStructures, algorithms, aiProbability, aiFeedback) VALUES (?, ?, ?, ?, ?)";
         
-        DBHelper.getInstance().ExecuteDB(sql, 
-            ca.getSubmissionId(), 
-            ca.getDataStructures(), 
-            ca.getAlgorithms(), 
-            ca.getAiProbability(), 
-            ca.getAiFeedback()
-        );
+        DBHelper.getInstance().ExecuteDB(sql, ca.getSubmissionId(), ca.getDataStructures(), ca.getAlgorithms(), ca.getAiProbability(), ca.getAiFeedback());
     }
 
     public void DeleteAnalysis(int analysisId) {

@@ -18,7 +18,6 @@ public class AccountForm extends JFrame {
 
 	PlatformBLL plfBll = new PlatformBLL();
 	AccountBLL accBll = new AccountBLL();
-
 	private JTextField handle;
 	private JComboBox<Platform> cbb;
 	private JButton addBtn;
@@ -97,13 +96,13 @@ public class AccountForm extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Platform plf = (Platform) cbb.getSelectedItem();
+				Platform plf = (Platform)cbb.getSelectedItem();
 
-				AddAccountDTO acc = new AddAccountDTO();
-				acc.setHandle(handle.getText());
-				acc.setPlatformId(plf.getPlatformId());
-				acc.setAddedDate(new Timestamp(System.currentTimeMillis()));
-				acc.setLastCrawlDate(new Timestamp(System.currentTimeMillis()));
+				AddAccountDTO acc = new AddAccountDTO(handle.getText(), 
+						  plf.getPlatformId(), 
+					   	  new Timestamp(System.currentTimeMillis()), 
+						  new Timestamp(System.currentTimeMillis())
+						  );
 
 				if (accBll.AddAccount(acc)) {
 					JOptionPane.showMessageDialog(null, "Thêm tài khoản thành công!");

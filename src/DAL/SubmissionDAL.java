@@ -9,28 +9,56 @@ import Database.DBHelper;
 import Entities.Submission;
 
 public class SubmissionDAL {
+	
+	public List<Submission> GetSubmissionsByAccount(int accountId) {
+        List<Submission> list = new ArrayList<Submission>();
+        
+        String sql = "SELECT * FROM submissions WHERE accountId = ?";
+        
+        ResultSet rs = DBHelper.getInstance().GetRecords(sql, accountId);
+        
+        try {
+            while (rs != null && rs.next()) {
+            	Submission sub = new Submission(rs.getInt("submissionId"),
+						rs.getInt("accountId"),
+						rs.getString("remoteId"),
+						rs.getString("problemTitle"),
+						rs.getString("programmingLanguage"),
+						rs.getString("sourceCode"),
+						rs.getTimestamp("submissionTime")
+						);
+                
+                list.add(sub);
+            }
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     public List<Submission> GetAllSubmissions() {
         List<Submission> list = new ArrayList<Submission>();
         
         String sql = "SELECT * FROM submissions";
+        
         ResultSet rs = DBHelper.getInstance().GetRecords(sql);
         
         try {
             while (rs != null && rs.next()) {
-                Submission sub = new Submission();
-                
-                sub.setSubmissionId(rs.getInt("submissionId"));
-                sub.setAccountId(rs.getInt("accountId"));
-                sub.setRemoteId(rs.getString("remoteId"));
-                sub.setProblemTitle(rs.getString("problemTitle"));
-                sub.setProgrammingLanguage(rs.getString("programmingLanguage"));
-                sub.setSourceCode(rs.getString("sourceCode"));
-                sub.setSubmissionTime(rs.getTimestamp("submissionTime"));
-                
+            	Submission sub = new Submission(rs.getInt("submissionId"),
+						rs.getInt("accountId"),
+						rs.getString("remoteId"),
+						rs.getString("problemTitle"),
+						rs.getString("programmingLanguage"),
+						rs.getString("sourceCode"),
+						rs.getTimestamp("submissionTime")
+						);
+            	
                 list.add(sub);
             }
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             e.printStackTrace();
         }
         return list;
@@ -38,22 +66,23 @@ public class SubmissionDAL {
     
     public Submission GetSubmissionById(int submissionId) {
     	String sql = "SELECT * FROM submissions WHERE submissionId = ?";
+    	
 	    ResultSet rs = DBHelper.getInstance().GetRecords(sql, submissionId);
 	    
 	    Submission sub = null; 
 	    try {
 	        if (rs != null && rs.next()) {
-	        	sub = new Submission();
-                
-                sub.setSubmissionId(rs.getInt("submissionId"));
-                sub.setAccountId(rs.getInt("accountId"));
-                sub.setRemoteId(rs.getString("remoteId"));
-                sub.setProblemTitle(rs.getString("problemTitle"));
-                sub.setProgrammingLanguage(rs.getString("programmingLanguage"));
-                sub.setSourceCode(rs.getString("sourceCode"));
-                sub.setSubmissionTime(rs.getTimestamp("submissionTime"));
+	        	sub = new Submission(rs.getInt("submissionId"),
+						rs.getInt("accountId"),
+						rs.getString("remoteId"),
+						rs.getString("problemTitle"),
+						rs.getString("programmingLanguage"),
+						rs.getString("sourceCode"),
+						rs.getTimestamp("submissionTime")
+						);
 	        }
-	    } catch (Exception e) {
+	    } 
+	    catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	    return sub; 
@@ -75,29 +104,4 @@ public class SubmissionDAL {
         DBHelper.getInstance().ExecuteDB(sql2, submissionId);
     }
 
-    public List<Submission> GetSubmissionsByAccount(int accountId) {
-        List<Submission> list = new ArrayList<Submission>();
-        
-        String sql = "SELECT * FROM submissions WHERE accountId = ?";
-        ResultSet rs = DBHelper.getInstance().GetRecords(sql, accountId);
-        
-        try {
-            while (rs != null && rs.next()) {
-                Submission sub = new Submission();
-                
-                sub.setSubmissionId(rs.getInt("submissionId"));
-                sub.setAccountId(rs.getInt("accountId"));
-                sub.setRemoteId(rs.getString("remoteId"));
-                sub.setProblemTitle(rs.getString("problemTitle"));
-                sub.setProgrammingLanguage(rs.getString("programmingLanguage"));
-                sub.setSourceCode(rs.getString("sourceCode"));
-                sub.setSubmissionTime(rs.getTimestamp("submissionTime"));
-                
-                list.add(sub);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
 }
